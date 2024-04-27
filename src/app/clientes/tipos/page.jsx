@@ -1,9 +1,8 @@
-import ContentView from '@/components/ContentView';
-import clientCategory from '@/models/client/clientCategory';
-import { connectDB } from '@/utils/mongoose';
 import Link from 'next/link';
-import { Button } from 'primereact/button';
-import { Card } from 'primereact/card';
+import { connectDB } from '@/utils/mongoose';
+import { Card, Button } from '@/utils/primeComponents';
+import clientCategory from '@/models/client/clientCategory';
+import ContentView from '@/components/ContentView';
 
 const loadClientCategories = async () => {
   connectDB();
@@ -12,6 +11,8 @@ const loadClientCategories = async () => {
 };
 
 const ClientCategories = async () => {
+  const moduleName = 'clientCategory';
+  const itemUrl = 'clientes/tipos';
   const clientCategories = await loadClientCategories();
 
   return (
@@ -20,7 +21,11 @@ const ClientCategories = async () => {
         <i className="pi pi-arrow-left mr-2"></i>Volver
       </Link>
       <Card title="Lista de tipos de Cliente" className="mb-6">
-        <ContentView categories={clientCategories} />
+        <ContentView
+          elements={clientCategories}
+          moduleName={moduleName}
+          itemUrl={itemUrl}
+        />
         <Link href="/clientes/tipos/nuevo">
           <Button label="Nuevo tipo de cliente" className="w-full mt-4" />
         </Link>

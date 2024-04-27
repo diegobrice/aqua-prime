@@ -1,4 +1,4 @@
-import { Divider } from 'primereact/divider';
+import { Divider } from '@/utils/primeComponents';
 
 const Title = ({ text }) => {
   return (

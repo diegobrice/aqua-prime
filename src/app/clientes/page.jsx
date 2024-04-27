@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import FormGroup from '@/components/FormGroup';
-import { Button } from 'primereact/button';
-import { Card } from 'primereact/card';
+import { Card, Button } from '@/utils/primeComponents';
 
 const Client = () => {
   return (

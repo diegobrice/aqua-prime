@@ -1,56 +1,29 @@
 'use client';
-import { Button } from 'primereact/button';
-import { DataView } from 'primereact/dataview';
+import { confirm } from '@/utils/confirmDialog';
+import { Button, DataView, ConfirmDialog } from '@/utils/primeComponents';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 
-export default function ContentView({ categories }) {
+export default function ContentView({ moduleName, elements, itemUrl }) {
   const router = useRouter();
 
-  const accept = async (id) => {
-    try {
-      const res = await fetch(`/api/client/category/${id}`, {
-        method: 'DELETE',
-      });
-      router.refresh();
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
-  const reject = () => {
-    console.log('reject');
-  };
-
-  const confirm = (id) => {
-    confirmDialog({
-      message: 'Estas seguro de eliminar este tipo de cliente?',
-      icon: 'pi pi-info-circle',
-      defaultFocus: 'reject',
-      acceptClassName: 'p-button-danger',
-      accept: () => accept(id),
-      reject,
-    });
-  };
-
-  const itemTemplate = (category) => {
+  const itemTemplate = (element) => {
     return (
       <>
         <div
           className="flex justify-between flex-1 mb-2 border-b border-gray-500"
-          key={category._id}
+          key={element._id}
         >
           <div className="self-center">
-            <div className="text-xl">{category.name}</div>
+            <div className="text-xl">{element.name}</div>
           </div>
           <div className="flex gap-2 mb-2">
-            <Link href={`/clientes/tipos/${category._id}`}>
+            <Link href={`/${itemUrl}/${element._id}`}>
               <Button icon="pi pi-pencil" text></Button>
             </Link>
 
             <Button
-              onClick={() => confirm(category._id)}
+              onClick={() => confirm(element._id, moduleName, router.refresh)}
               icon="pi pi-trash"
               text
             ></Button>
@@ -63,8 +36,8 @@ export default function ContentView({ categories }) {
   const listTemplate = (items) => {
     if (!items || items.length === 0) return null;
 
-    let list = items.map((category) => {
-      return itemTemplate(category);
+    let list = items.map((element) => {
+      return itemTemplate(element);
     });
 
     return <div className="grid grid-nogutter">{list}</div>;
@@ -74,7 +47,7 @@ export default function ContentView({ categories }) {
     <div className="card">
       <ConfirmDialog />
       <DataView
-        value={categories}
+        value={elements}
         listTemplate={listTemplate}
         paginator
         rows={10}

@@ -1,13 +1,13 @@
 'use client';
-import { useParams, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { InputText } from 'primereact/inputtext';
-import { Button } from 'primereact/button';
-import { Card } from 'primereact/card';
-import FormGroup from '@/components/FormGroup';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { useParams, useRouter } from 'next/navigation';
+import { getModuleItem, createModuleItem, updateModuleItem } from '@/services';
+import { Card, Button, InputText } from '@/utils/primeComponents';
+import FormGroup from '@/components/FormGroup';
 
 const ClientCategory = () => {
+  const moduleName = 'clientCategory';
   const [newClientCategory, setNewClientCategory] = useState({
     name: '',
   });
@@ -15,22 +15,13 @@ const ClientCategory = () => {
   const params = useParams();
 
   const getClientCategory = async () => {
-    const res = await fetch(`/api/client/category/${params.id}`);
-    const data = await res.json();
+    const data = await getModuleItem(moduleName, params.id);
     setNewClientCategory({ name: data.name });
   };
 
   const createClientCategory = async () => {
     try {
-      const res = await fetch('/api/client/category', {
-        method: 'POST',
-        body: JSON.stringify(newClientCategory),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      const data = await res.json();
-
+      const res = await createModuleItem(moduleName, newClientCategory);
       if (res.status === 200) {
         router.push('/clientes/tipos');
         router.refresh();
@@ -42,13 +33,11 @@ const ClientCategory = () => {
 
   const updateClientCategory = async () => {
     try {
-      const res = await fetch(`/api/client/category/${params.id}`, {
-        method: 'PUT',
-        body: JSON.stringify(newClientCategory),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const res = await updateModuleItem(
+        moduleName,
+        params.id,
+        newClientCategory
+      );
       router.push('/clientes/tipos');
       router.refresh();
     } catch (error) {
@@ -65,22 +54,7 @@ const ClientCategory = () => {
     }
   };
 
-  const handleDelete = async () => {
-    try {
-      if (window.confirm('Are you sure to delete?')) {
-        const res = await fetch(`/api/client/category/${params.id}`, {
-          method: 'DELETE',
-        });
-        router.push('/clientes/tipos');
-        router.refresh();
-      }
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
   const handleChange = (e) => {
-    console.log(e);
     setNewClientCategory({
       ...newClientCategory,
       [e.target.name]: e.target.value,
@@ -95,7 +69,7 @@ const ClientCategory = () => {
     if (params.id) {
       getClientCategory();
     }
-  }, []);
+  }, [params.id]);
 
   return (
     <>
@@ -116,15 +90,6 @@ const ClientCategory = () => {
           <FormGroup>
             <Button type="submit" label="Guardar" className="w-full mt-4" />
           </FormGroup>
-          {params.id && (
-            <FormGroup>
-              <Button
-                onClick={handleDelete}
-                label="Eliminar"
-                className="w-full mt-4"
-              />
-            </FormGroup>
-          )}
         </form>
       </Card>
     </>

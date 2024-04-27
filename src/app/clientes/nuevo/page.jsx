@@ -1,12 +1,14 @@
 'use client';
 import { useParams } from 'next/navigation';
-import { InputText } from 'primereact/inputtext';
-import { InputMask } from 'primereact/inputmask';
-import { Button } from 'primereact/button';
-import { Dropdown } from 'primereact/dropdown';
 import { useState } from 'react';
-import { Card } from 'primereact/card';
 import FormGroup from '@/components/FormGroup';
+import {
+  Button,
+  Card,
+  Dropdown,
+  InputMask,
+  InputText,
+} from '@/utils/primeComponents';
 
 const NewClient = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
