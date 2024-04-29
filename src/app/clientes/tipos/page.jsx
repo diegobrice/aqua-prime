@@ -22,7 +22,7 @@ const ClientCategories = async () => {
       </Link>
       <Card title="Lista de tipos de Cliente" className="mb-6">
         <ContentView
-          elements={clientCategories}
+          items={clientCategories}
           moduleName={moduleName}
           itemUrl={itemUrl}
         />

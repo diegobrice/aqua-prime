@@ -33,7 +33,7 @@ const ClientCategory = () => {
 
   const updateClientCategory = async () => {
     try {
-      const res = await updateModuleItem(
+      await updateModuleItem(
         moduleName,
         params.id,
         newClientCategory

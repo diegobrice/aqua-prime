@@ -1,6 +1,6 @@
 import { connect, connection } from 'mongoose';
 
-const url = 'mongodb://localhost:27017/aqua-prime';
+const url = process.env.DB_HOST;
 
 const conn = {
   isConnected: false,
