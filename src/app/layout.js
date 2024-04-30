@@ -1,8 +1,8 @@
-import { Inter } from 'next/font/google';
-import './globals.css';
-import { PrimeReactProvider } from 'primereact/api';
-import 'primereact/resources/themes/lara-dark-blue/theme.css';
 import 'primeicons/primeicons.css';
+import './globals.css';
+import 'primereact/resources/themes/lara-dark-blue/theme.css';
+import { Inter } from 'next/font/google';
+import { PrimeReactProvider } from 'primereact/api';
 import { Navbar } from '@/components/Navbar';
 
 const inter = Inter({ subsets: ['latin'] });
