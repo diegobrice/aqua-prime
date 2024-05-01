@@ -9,3 +9,7 @@
   @tailwind components;
   @tailwind utilities;
 }
+
+.p-progress-spinner-circle {
+  stroke: #fff !important;
+}

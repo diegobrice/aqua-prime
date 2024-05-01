@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { getModuleItem, createModuleItem, updateModuleItem } from '@/services';
-import { Card, Button, InputText } from '@/utils/primeComponents';
+import { Card, Button, InputText, Skeleton } from '@/utils/primeComponents';
 import FormGroup from '@/components/FormGroup';
 
 const ClientCategory = () => {
@@ -11,12 +11,15 @@ const ClientCategory = () => {
   const [newClientCategory, setNewClientCategory] = useState({
     name: '',
   });
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const params = useParams();
 
   const getClientCategory = async () => {
+    setIsLoading(true);
     const data = await getModuleItem(moduleName, params.id);
     setNewClientCategory({ name: data.name });
+    setIsLoading(false);
   };
 
   const createClientCategory = async () => {
@@ -33,11 +36,7 @@ const ClientCategory = () => {
 
   const updateClientCategory = async () => {
     try {
-      await updateModuleItem(
-        moduleName,
-        params.id,
-        newClientCategory
-      );
+      await updateModuleItem(moduleName, params.id, newClientCategory);
       router.push('/clientes/tipos');
       router.refresh();
     } catch (error) {
@@ -78,15 +77,22 @@ const ClientCategory = () => {
       </Link>
       <Card title={cardTitle}>
         <form onSubmit={handleSubmit}>
-          <FormGroup>
-            <label htmlFor="name">Nombre</label>
-            <InputText
-              onChange={handleChange}
-              value={newClientCategory.name}
-              name="name"
-              id="name"
-            />
-          </FormGroup>
+          {isLoading ? (
+            <>
+              <Skeleton height="2rem" width="10rem" className="mb-4"></Skeleton>
+              <Skeleton height="2.5rem" className="mb-4"></Skeleton>
+            </>
+          ) : (
+            <FormGroup>
+              <label htmlFor="name">Nombre</label>
+              <InputText
+                onChange={handleChange}
+                value={newClientCategory.name}
+                name="name"
+                id="name"
+              />
+            </FormGroup>
+          )}
           <FormGroup>
             <Button type="submit" label="Guardar" className="w-full mt-4" />
           </FormGroup>

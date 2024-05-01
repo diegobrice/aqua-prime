@@ -6,3 +6,4 @@ export { Divider } from 'primereact/divider';
 export { Dropdown } from 'primereact/dropdown';
 export { InputMask } from 'primereact/inputmask';
 export { InputText } from 'primereact/inputtext';
+export { Skeleton } from 'primereact/skeleton';

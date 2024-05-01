@@ -1,11 +1,13 @@
 import { confirmDialog } from '@/utils/primeComponents';
 
-const accept = async (id, moduleName, callback) => {
+const accept = async (id, moduleName, deleteItem) => {
   try {
     const res = await fetch(`/api/${moduleName}/${id}`, {
       method: 'DELETE',
     });
-    callback();
+    if (res.status === 200) {
+      deleteItem(id);
+    }
   } catch (error) {
     console.log(error.message);
   }
@@ -21,5 +23,6 @@ export const confirm = (id, moduleName, callback) => {
     acceptClassName: 'p-button-danger',
     accept: () => accept(id, moduleName, callback),
     reject,
+    acceptLabel: 'Si',
   });
 };

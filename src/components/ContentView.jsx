@@ -1,11 +1,19 @@
 'use client';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { confirm } from '@/utils/confirmDialog';
 import { Button, DataView, ConfirmDialog } from '@/utils/primeComponents';
+import { confirm } from '@/utils/confirmDialog';
+import Empty from './Empty';
 
-export default function ContentView({ moduleName, items, itemUrl }) {
-  const router = useRouter();
+export default function ContentView({
+  moduleName,
+  items,
+  itemUrl,
+  setClientCategories,
+}) {
+  const deleteItem = (id) => {
+    const newItems = items.filter((el) => el._id !== id);
+    setClientCategories(newItems);
+  };
 
   const itemTemplate = (item) => {
     return (
@@ -22,7 +30,7 @@ export default function ContentView({ moduleName, items, itemUrl }) {
           </Link>
 
           <Button
-            onClick={() => confirm(item._id, moduleName, router.refresh)}
+            onClick={() => confirm(item._id, moduleName, deleteItem)}
             icon="pi pi-trash"
             text
           ></Button>
@@ -32,7 +40,7 @@ export default function ContentView({ moduleName, items, itemUrl }) {
   };
 
   const listTemplate = (items) => {
-    if (!items || items.length === 0) return null;
+    if (!items || items.length === 0) return <Empty />;
 
     let list = items.map((item) => {
       return itemTemplate(item);
