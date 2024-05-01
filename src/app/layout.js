@@ -16,6 +16,18 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <PrimeReactProvider>
+        <head>
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+              const style = document.createElement('style')
+              style.innerHTML = '@layer tailwind-base, primereact, tailwind-utilities;'
+              style.setAttribute('type', 'text/css')
+              document.querySelector('head').prepend(style)
+            `,
+            }}
+          />
+        </head>
         <body className={inter.className}>
           <Navbar />
           <main className="bg-gray-900 min-h-screen">
