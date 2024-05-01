@@ -7,7 +7,8 @@ import ContentView from '@/components/ContentView';
 const loadClientCategories = async () => {
   connectDB();
   const clientCategories = await clientCategory.find();
-  return clientCategories;
+  const data = JSON.parse(JSON.stringify(clientCategories));
+  return data;
 };
 
 const ClientCategories = async () => {

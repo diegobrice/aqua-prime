@@ -1,5 +1,3 @@
-import { Divider } from '@/utils/primeComponents';
-
 const Title = ({ text }) => {
   return (
     <div className="text-center p-4 pt-6 text-lg">
@@ -7,7 +5,6 @@ const Title = ({ text }) => {
         <i className="pi pi-user mr-2"></i>
         {text}
       </h2>
-      {/* <Divider /> */}
     </div>
   );
 };
