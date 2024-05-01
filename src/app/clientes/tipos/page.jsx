@@ -1,20 +1,23 @@
+'use client';
 import Link from 'next/link';
-import { connectDB } from '@/utils/mongoose';
 import { Card, Button } from '@/utils/primeComponents';
-import clientCategory from '@/models/client/clientCategory';
 import ContentView from '@/components/ContentView';
+import { getModuleItems } from '@/services';
+import { useEffect, useState } from 'react';
 
-const loadClientCategories = async () => {
-  connectDB();
-  const clientCategories = await clientCategory.find();
-  const data = JSON.parse(JSON.stringify(clientCategories));
-  return data;
-};
-
-const ClientCategories = async () => {
+const ClientCategories = () => {
   const moduleName = 'clientCategory';
   const itemUrl = 'clientes/tipos';
-  const clientCategories = await loadClientCategories();
+  const [clientCategories, setClientCategories] = useState([]);
+
+  const getClientCategories = async () => {
+    const data = await getModuleItems(moduleName);
+    setClientCategories(data);
+  };
+
+  useEffect(() => {
+    getClientCategories();
+  }, []);
 
   return (
     <>

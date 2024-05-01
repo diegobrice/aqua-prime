@@ -4,6 +4,12 @@ export const getModuleItem = async (module, id) => {
   return data;
 };
 
+export const getModuleItems = async (module) => {
+  const res = await fetch(`/api/${module}`);
+  const data = await res.json();
+  return data;
+};
+
 export const createModuleItem = async (module, item) => {
   const res = await fetch(`/api/${module}`, {
     method: 'POST',
