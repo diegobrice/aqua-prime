@@ -188,7 +188,11 @@ const NewClient = () => {
             </>
           )}
           <FormGroup>
-            <Button label="Guardar" className="w-full mt-4" />
+            <Button
+              label="Guardar"
+              className="w-full mt-4"
+              disabled={isLoading}
+            />
           </FormGroup>
         </form>
       </Card>

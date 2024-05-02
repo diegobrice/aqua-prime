@@ -94,7 +94,12 @@ const ClientCategory = () => {
             </FormGroup>
           )}
           <FormGroup>
-            <Button type="submit" label="Guardar" className="w-full mt-4" />
+            <Button
+              type="submit"
+              label="Guardar"
+              className="w-full mt-4"
+              disabled={isLoading}
+            />
           </FormGroup>
         </form>
       </Card>
