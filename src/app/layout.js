@@ -28,9 +28,9 @@ export default function RootLayout({ children }) {
             }}
           />
         </head>
-        <body className={inter.className}>
+        <body className={(inter.className, 'min-h-screen flex flex-col')}>
           <Navbar />
-          <main className="bg-gray-900 min-h-screen">
+          <main className="bg-gray-900 flex-1">
             <div className="p-5 pt-8 max-w-screen-sm mx-auto">{children}</div>
           </main>
         </body>

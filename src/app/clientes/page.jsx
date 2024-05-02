@@ -1,19 +1,45 @@
+'use client';
 import Link from 'next/link';
 import FormGroup from '@/components/FormGroup';
 import { Card, Button } from '@/utils/primeComponents';
+import { useEffect, useState } from 'react';
+import ContentSkeleton from '@/components/Skeleton/ContentSkeleton';
+import ContentView from '@/components/ContentView';
+import { getModuleItems } from '@/services';
 
 const Client = () => {
+  const moduleName = 'client';
+  const itemUrl = 'clientes';
+  const [clients, setClients] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const getClients = async () => {
+    const data = await getModuleItems(moduleName);
+    setClients(data);
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    getClients();
+  }, []);
   return (
     <>
+      <Link href="/" className="mb-6 block">
+        <i className="pi pi-arrow-left mr-2"></i>Volver
+      </Link>
       <Card title="Lista de Clientes" className="mb-6">
-        <ul className="flex gpa-x-4 flex-col gap-4">
-          <li>
-            <Link href="/clientes/1">Cliente 1</Link>
-          </li>
-          <li>
-            <Link href="/clientes/2">Cliente 2</Link>
-          </li>
-        </ul>
+        {isLoading ? (
+          <ContentSkeleton />
+        ) : (
+          <>
+            <ContentView
+              items={clients}
+              moduleName={moduleName}
+              itemUrl={itemUrl}
+              setClientCategories={setClients}
+            />
+          </>
+        )}
         <FormGroup>
           <Link href="/clientes/nuevo">
             <Button label="Nuevo Cliente" className="w-full mt-12" />

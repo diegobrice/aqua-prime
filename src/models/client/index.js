@@ -13,9 +13,12 @@ const clientSchema = new Schema(
       required: [true, 'La direccion es requerida'],
       trim: true,
     },
+    addressTwo: {
+      type: String,
+      trim: true,
+    },
     phoneNumber: {
       type: String,
-      required: [true, 'El numero celular es requerida'],
       trim: true,
     },
     additionalPhoneNumber: {

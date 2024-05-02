@@ -1,9 +1,10 @@
 'use client';
 import Link from 'next/link';
-import { Card, Button, Skeleton } from '@/utils/primeComponents';
+import { Card, Button } from '@/utils/primeComponents';
 import ContentView from '@/components/ContentView';
 import { getModuleItems } from '@/services';
 import { useEffect, useState } from 'react';
+import ContentSkeleton from '@/components/Skeleton/ContentSkeleton';
 
 const ClientCategories = () => {
   const moduleName = 'clientCategory';
@@ -28,11 +29,7 @@ const ClientCategories = () => {
       </Link>
       <Card title="Lista de tipos de Cliente" className="mb-6">
         {isLoading ? (
-          <>
-            <Skeleton height="2.5rem" className="mb-4"></Skeleton>
-            <Skeleton height="2.5rem" className="mb-4"></Skeleton>
-            <Skeleton height="2.5rem" className="mb-4"></Skeleton>
-          </>
+          <ContentSkeleton />
         ) : (
           <>
             <ContentView
