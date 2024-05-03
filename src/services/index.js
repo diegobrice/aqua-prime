@@ -29,4 +29,5 @@ export const updateModuleItem = async (module, id, item) => {
       'Content-Type': 'application/json',
     },
   });
+  return res;
 };

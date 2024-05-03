@@ -48,9 +48,15 @@ const ClientCategory = () => {
 
     const updateClientCategory = async () => {
       try {
-        await updateModuleItem(moduleName, params.id, formik.values);
-        router.push('/clientes/tipos');
-        router.refresh();
+        const res = await updateModuleItem(
+          moduleName,
+          params.id,
+          formik.values
+        );
+        if (res.status === 200) {
+          router.push('/clientes/tipos');
+          router.refresh();
+        }
       } catch (error) {
         //TODO: VALIDATE ITEM DOESNT EXIST IN DB
         console.log(error.message);
@@ -80,10 +86,6 @@ const ClientCategory = () => {
           <small className="p-error">{formik.errors[name]}</small>
         )
       );
-    };
-
-    const validateNoDuplicate = () => {
-      return false;
     };
 
     return (
