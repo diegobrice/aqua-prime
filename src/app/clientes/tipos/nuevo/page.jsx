@@ -97,7 +97,7 @@ const ClientCategory = () => {
           </>
         ) : (
           <FormGroup>
-            <label htmlFor="name">Nombre</label>
+            <label htmlFor="name">Nombre*</label>
             <InputText
               id="name"
               name="name"

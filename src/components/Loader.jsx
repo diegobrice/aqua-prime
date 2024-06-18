@@ -1,4 +1,4 @@
-import { ProgressSpinner } from 'primereact/progressspinner';
+import { ProgressSpinner } from '@/utils/primeComponents';
 
 const Loader = ({ text }) => {
   return (

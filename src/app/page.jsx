@@ -1,4 +1,5 @@
-import { PanelMenu } from 'primereact/panelmenu';
+import { PanelMenu } from "@/utils/primeComponents";
+
 
 export default function Home() {
   const items = [
