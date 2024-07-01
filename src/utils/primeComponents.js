@@ -5,6 +5,7 @@ export { DataView } from 'primereact/dataview';
 export { Divider } from 'primereact/divider';
 export { Dropdown } from 'primereact/dropdown';
 export { InputMask } from 'primereact/inputmask';
+export { InputNumber } from 'primereact/inputnumber';
 export { InputText } from 'primereact/inputtext';
 export { PanelMenu } from 'primereact/panelmenu';
 export { ProgressSpinner } from 'primereact/progressspinner';

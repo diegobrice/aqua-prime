@@ -6,46 +6,46 @@ import { getModuleItems } from '@/services';
 import { useEffect, useState } from 'react';
 import ContentSkeleton from '@/components/Skeleton/ContentSkeleton';
 
-const ClientCategories = () => {
-  const moduleName = 'clientCategory';
-  const itemUrl = 'clientes/tipos';
-  const [clientCategories, setClientCategories] = useState([]);
+const ProductCategories = () => {
+  const moduleName = 'productCategory';
+  const itemUrl = 'productos/tipos';
+  const [productCategories, setProductCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const getClientCategories = async () => {
+  const getProductCategories = async () => {
     const data = await getModuleItems(moduleName);
-    setClientCategories(data);
+    setProductCategories(data);
     setIsLoading(false);
   };
 
   useEffect(() => {
-    getClientCategories();
+    getProductCategories();
   }, []);
 
   return (
     <>
-      <Link href="/clientes" className="mb-6 block">
+      <Link href="/productos" className="mb-6 block">
         <i className="pi pi-arrow-left mr-2"></i>Volver
       </Link>
-      <Card title="Lista de tipos de Cliente" className="mb-6">
+      <Card title="Lista de tipos de Producto" className="mb-6">
         {isLoading ? (
           <ContentSkeleton />
         ) : (
           <>
             <ContentView
-              items={clientCategories}
+              items={productCategories}
               moduleName={moduleName}
               itemUrl={itemUrl}
-              setCategories={setClientCategories}
+              setCategories={setProductCategories}
             />
           </>
         )}
-        <Link href="/clientes/tipos/nuevo">
-          <Button label="Nuevo tipo de cliente" className="w-full mt-4" />
+        <Link href="/productos/tipos/nuevo">
+          <Button label="Nuevo tipo de producto" className="w-full mt-4" />
         </Link>
       </Card>
     </>
   );
 };
 
-export default ClientCategories;
+export default ProductCategories;

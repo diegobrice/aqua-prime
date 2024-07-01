@@ -16,7 +16,33 @@ export const clientValidationSchema = yup.object({
     .string()
     .required('La dirección del cliente es requerida.')
     .min(3, 'La dirección del cliente debe tener un mínimo de 3 caracteres.'),
-  clientCategory: yup
+  clientCategory: yup.object().required('Debes seleccionar un tipo de cliente'),
+});
+
+export const productCategoryValidationSchema = yup.object({
+  name: yup
+    .string()
+    .required('El tipo de producto es requerido.')
+    .min(3, 'El tipo de producto debe tener un mínimo de 3 caracteres.'),
+});
+
+export const productValidationSchema = yup.object({
+  name: yup
+    .string()
+    .required('El nombre del producto es requerido.')
+    .min(3, 'El nombre del producto debe tener un mínimo de 3 caracteres.'),
+  description: yup
+    .string()
+    .required('La descripción del producto es requerida.')
+    .min(
+      3,
+      'La descripción del producto debe tener un mínimo de 3 caracteres.'
+    ),
+  productCategory: yup
     .object()
-    .required('Debes seleccionar un tipo de cliente'),
+    .required('Debes seleccionar un tipo de producto'),
+  price: yup
+    .number()
+    .positive()
+    .required('El precio del producto es requerido.'),
 });

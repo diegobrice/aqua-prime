@@ -8,11 +8,11 @@ export default function ContentView({
   moduleName,
   items,
   itemUrl,
-  setClientCategories,
+  setCategories,
 }) {
   const deleteItem = (id) => {
     const newItems = items.filter((el) => el._id !== id);
-    setClientCategories(newItems);
+    setCategories(newItems);
   };
 
   const itemTemplate = (item) => {

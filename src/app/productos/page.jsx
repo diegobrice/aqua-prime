@@ -7,47 +7,47 @@ import ContentSkeleton from '@/components/Skeleton/ContentSkeleton';
 import ContentView from '@/components/ContentView';
 import { getModuleItems } from '@/services';
 
-const Client = () => {
-  const moduleName = 'client';
-  const itemUrl = 'clientes';
-  const [clients, setClients] = useState([]);
+const Product = () => {
+  const moduleName = 'product';
+  const itemUrl = 'productos';
+  const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const getClients = async () => {
+  const getProducts = async () => {
     const data = await getModuleItems(moduleName);
-    setClients(data);
+    setProducts(data);
     setIsLoading(false);
   };
 
   useEffect(() => {
-    getClients();
+    getProducts();
   }, []);
   return (
     <>
       <Link href="/" className="mb-6 block">
         <i className="pi pi-arrow-left mr-2"></i>Volver
       </Link>
-      <Card title="Lista de Clientes" className="mb-6">
+      <Card title="Lista de Productos" className="mb-6">
         {isLoading ? (
           <ContentSkeleton />
         ) : (
           <>
             <ContentView
-              items={clients}
+              items={products}
               moduleName={moduleName}
               itemUrl={itemUrl}
-              setCategories={setClients}
+              setCategories={setProducts}
             />
           </>
         )}
         <FormGroup>
-          <Link href="/clientes/nuevo">
-            <Button label="Nuevo Cliente" className="w-full mt-12" />
+          <Link href="/productos/nuevo">
+            <Button label="Nuevo Producto" className="w-full mt-12" />
           </Link>
         </FormGroup>
         <FormGroup>
-          <Link href="/clientes/tipos">
-            <Button label="Tipos de Cliente" className="w-full" />
+          <Link href="/productos/tipos">
+            <Button label="Tipos de Productos" className="w-full" />
           </Link>
         </FormGroup>
       </Card>
@@ -55,4 +55,4 @@ const Client = () => {
   );
 };
 
-export default Client;
+export default Product;
