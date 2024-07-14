@@ -46,3 +46,12 @@ export const productValidationSchema = yup.object({
     .positive()
     .required('El precio del producto es requerido.'),
 });
+
+export const productDiscountValidationSchema = yup.object({
+  product: yup.object().required('El nombre del producto es requerido.'),
+  clientCategory: yup.object().required('El tipo de cliente es requerido.'),
+  discountedPrice: yup
+    .number()
+    .positive()
+    .required('El nuevo precio es requerido.'),
+});

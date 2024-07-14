@@ -46,6 +46,11 @@ const Product = () => {
           </Link>
         </FormGroup>
         <FormGroup>
+          <Link href="/productos/descuentos">
+            <Button label="Descuentos" className="w-full" />
+          </Link>
+        </FormGroup>
+        <FormGroup>
           <Link href="/productos/tipos">
             <Button label="Tipos de Productos" className="w-full" />
           </Link>

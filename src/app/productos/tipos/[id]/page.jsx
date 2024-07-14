@@ -1,2 +1,2 @@
-import NewProduct from '../nuevo/page';
-export default NewProduct;
+import ProductCategory from '../nuevo/page';
+export default ProductCategory;

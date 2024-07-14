@@ -1,2 +1,2 @@
-import NewCategory from '../nuevo/page';
-export default NewCategory;
+import ClientCategory from '../nuevo/page';
+export default ClientCategory;

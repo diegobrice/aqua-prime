@@ -118,10 +118,6 @@ const NewProduct = () => {
             <Skeleton height="3rem" className="mb-4"></Skeleton>
             <Skeleton height="2rem" width="10rem" className="mb-2"></Skeleton>
             <Skeleton height="3rem" className="mb-4"></Skeleton>
-            <Skeleton height="2rem" width="10rem" className="mb-2"></Skeleton>
-            <Skeleton height="3rem" className="mb-4"></Skeleton>
-            <Skeleton height="2rem" width="10rem" className="mb-2"></Skeleton>
-            <Skeleton height="3rem" className="mb-4"></Skeleton>
           </>
         ) : (
           <>

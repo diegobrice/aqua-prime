@@ -21,9 +21,17 @@ export default function ContentView({
         className="flex justify-between flex-1 mb-2 border-b border-gray-500"
         key={item._id}
       >
-        <div className="self-center">
-          <div className="text-xl">{item.name}</div>
-        </div>
+        {moduleName === 'productDiscount' ? (
+          <div className="self-center flex gap-2">
+            <div className="text-lg">{item.clientCategory?.name}</div>
+            <span>-</span>
+            <div className="text-lg">{item.product?.name}</div>
+          </div>
+        ) : (
+          <div className="self-center">
+            <div className="text-xl">{item.name}</div>
+          </div>
+        )}
         <div className="flex gap-2 mb-2">
           <Link href={`/${itemUrl}/${item._id}`}>
             <Button icon="pi pi-pencil" text></Button>
@@ -41,6 +49,8 @@ export default function ContentView({
 
   const listTemplate = (items) => {
     if (!items || items.length === 0) return <Empty />;
+
+    console.log(items);
 
     let list = items.map((item) => {
       return itemTemplate(item);
