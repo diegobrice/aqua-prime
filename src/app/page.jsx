@@ -6,13 +6,13 @@ export default function Home() {
     {
       label: 'Nuevo Pedido',
       icon: 'pi pi-plus-circle',
-      url: '/pedido/nuevo',
+      url: '/pedidos/nuevo',
     },
-    {
-      label: 'Reportes',
-      icon: 'pi pi-chart-bar',
-      url: '/reportes',
-    },
+    // {
+    //   label: 'Reportes',
+    //   icon: 'pi pi-chart-bar',
+    //   url: '/reportes',
+    // },
     {
       label: 'Pedidos',
       icon: 'pi pi-file',

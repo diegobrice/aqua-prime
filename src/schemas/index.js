@@ -55,3 +55,12 @@ export const productDiscountValidationSchema = yup.object({
     .positive()
     .required('El nuevo precio es requerido.'),
 });
+
+export const orderValidationSchema = yup.object({
+  client: yup.object(),
+  products: yup.array().of(yup.object()),
+  status: yup.string(),
+  createdDate: yup.string(),
+  deliveredDate: yup.string(),
+  observations: yup.string(),
+});
