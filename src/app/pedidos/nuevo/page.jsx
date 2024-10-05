@@ -20,6 +20,7 @@ const NewOrder = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [clients, setClients] = useState([]);
   const [selectedClient, setSelectedClient] = useState('');
+  const [amount, setAmount] = useState([]);
   const [products, setProducts] = useState([]);
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -149,7 +150,14 @@ const NewOrder = () => {
             {products && (
               <ProductsView products={selectedProducts} addToCart={addToCart} />
             )}{' '}
-            {cart.length > 0 && <CartView cart={cart} setCart={setCart} />}
+            {cart.length > 0 && (
+              <CartView
+                cart={cart}
+                setCart={setCart}
+                setAmount={setAmount}
+                editable
+              />
+            )}
             <FormGroup>
               <label htmlFor="observations">Observaciones:</label>
               <InputTextarea

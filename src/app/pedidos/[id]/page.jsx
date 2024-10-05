@@ -22,6 +22,7 @@ const EditOrder = () => {
   const moduleName = 'order';
   const [isLoading, setIsLoading] = useState(true);
   const [order, setOrder] = useState([]);
+  const [amount, setAmount] = useState([]);
   const [products, setProducts] = useState([]);
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -33,6 +34,7 @@ const EditOrder = () => {
 
   const getOrder = async () => {
     const data = await getModuleItem(moduleName, params.id);
+    data.payMethod = { name: data.payMethod };
     setOrder(data);
     setCart(data.products);
     setIsLoading(false);
@@ -72,8 +74,8 @@ const EditOrder = () => {
         products: cart,
         status: 'completed',
         deliveredDate: new Date(),
-        payMethod: orderDetails.payMethod,
-        amount: orderDetails.amount,
+        payMethod: orderDetails.payMethod.name,
+        amount: amount,
       };
       updateOrder(formData);
     };
@@ -109,7 +111,7 @@ const EditOrder = () => {
         ) : (
           <>
             <ClientCard client={order.client} />
-            {order.client.name && (
+            {order.client.name && order.status === 'pending' && (
               <div className="mt-6 mb-4">
                 <p className="my-2">2. Agregar productos:</p>
                 <div className="flex gap-2">
@@ -134,20 +136,43 @@ const EditOrder = () => {
             {products && (
               <ProductsView products={selectedProducts} addToCart={addToCart} />
             )}{' '}
-            {cart.length > 0 && <CartView cart={cart} setCart={setCart} />}
+            {cart.length > 0 && (
+              <CartView
+                cart={cart}
+                setCart={setCart}
+                setAmount={setAmount}
+                editable={order.status === 'pending'}
+              />
+            )}
             <div className="grid grid-cols-2 gap-4">
-              <FormGroup>
-                <label htmlFor="payMethod">Metodo de pago:</label>
-                <Dropdown
-                  id="payMethod"
-                  name="payMethod"
-                  options={payMethods}
-                  optionLabel="name"
-                  placeholder="Selecciona un tipo"
-                  value={orderDetails.payMethod}
-                  onChange={handleChange}
-                />
-              </FormGroup>
+              {order.status === 'pending' && (
+                <FormGroup>
+                  <label htmlFor="payMethod">Metodo de pago:</label>
+                  <Dropdown
+                    id="payMethod"
+                    name="payMethod"
+                    options={payMethods}
+                    optionLabel="name"
+                    placeholder="Selecciona un tipo"
+                    value={orderDetails.payMethod}
+                    onChange={handleChange}
+                  />
+                </FormGroup>
+              )}
+              {order.status === 'completed' && (
+                <FormGroup>
+                  <label htmlFor="payMethod">Metodo de pago:</label>
+                  <Dropdown
+                    id="payMethod"
+                    name="payMethod"
+                    options={payMethods}
+                    optionLabel="name"
+                    placeholder="Selecciona un tipo"
+                    value={order.payMethod}
+                    disabled
+                  />
+                </FormGroup>
+              )}
               <FormGroup>
                 <label htmlFor="amount">Monto Total:</label>
                 <InputNumber
@@ -155,9 +180,10 @@ const EditOrder = () => {
                   name="amount"
                   mode="currency"
                   currency="PEN"
+                  inputStyle={{ width: '100%' }}
                   locale="es-PE"
-                  value={orderDetails.amount}
-                  onValueChange={handleChange}
+                  value={amount}
+                  disabled
                 />
               </FormGroup>
             </div>
@@ -173,14 +199,16 @@ const EditOrder = () => {
             </FormGroup> */}
           </>
         )}
-        <FormGroup>
-          <Button
-            type="submit"
-            label="Guardar"
-            className="w-full mt-4"
-            disabled={isLoading || cart.length === 0}
-          />
-        </FormGroup>
+        {order.status === 'pending' && (
+          <FormGroup>
+            <Button
+              type="submit"
+              label="Guardar"
+              className="w-full mt-4"
+              disabled={isLoading || cart.length === 0}
+            />
+          </FormGroup>
+        )}
       </form>
     );
   };

@@ -70,6 +70,14 @@ const orderSchema = new Schema(
       type: String,
       trim: true,
     },
+    payMethod: {
+      id: { Type: String },
+      name: { Type: String },
+    },
+    amount: {
+      type: Number,
+      trim: true,
+    },
   },
   {
     timestamps: true,

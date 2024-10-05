@@ -4,12 +4,24 @@ import { Button, DataView, ConfirmDialog } from '@/utils/primeComponents';
 import { confirm } from '@/utils/confirmDialog';
 import Empty from './Empty';
 
-export default function OrderView({ items, itemUrl }) {
+export default function OrderView({
+  moduleName,
+  items,
+  itemUrl,
+  setCategories,
+  editable,
+}) {
+  const deleteItem = (id) => {
+    const newItems = items.filter((el) => el._id !== id);
+    setCategories(newItems);
+  };
+  
   const itemTemplate = (item) => {
     const totalPrice = item.products.reduce(
       (acc, curr) => acc + curr.price * curr.quantity,
       0
     );
+
     return (
       <div
         className="flex justify-between flex-1 mb-2 border-b border-gray-500"
@@ -31,11 +43,24 @@ export default function OrderView({ items, itemUrl }) {
           <p>S/. {totalPrice.toFixed(2)}</p>
         </div>
 
-        <div className="flex gap-2 mb-2">
-          <Link href={`/${itemUrl}/${item._id}`}>
-            <Button icon="pi pi-pencil" text></Button>
-          </Link>
-        </div>
+        {editable ? (
+          <div className="flex gap-2 mb-2">
+            <Link href={`/${itemUrl}/${item._id}`}>
+              <Button icon="pi pi-pencil" text></Button>
+            </Link>
+            <Button
+              onClick={() => confirm(item._id, moduleName, deleteItem)}
+              icon="pi pi-trash"
+              text
+            ></Button>
+          </div>
+        ) : (
+          <div className="flex gap-2 mb-2">
+            <Link href={`/${itemUrl}/${item._id}`}>
+              <Button icon="pi pi-eye" text></Button>
+            </Link>
+          </div>
+        )}
       </div>
     );
   };

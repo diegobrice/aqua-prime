@@ -1,12 +1,28 @@
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
+import { useEffect } from 'react';
 
-const CartView = ({ cart, setCart }) => {
+const CartView = ({ setAmount, cart, setCart, editable }) => {
+  useEffect(() => {
+    setAmount(getTotalPrice());
+  }, []);
+
+  const getTotalPrice = () => {
+    console.log(cart.length);
+
+    const totalPrice = cart.reduce(
+      (acc, curr) => acc + curr.price * curr.quantity,
+      0
+    );
+    return totalPrice.toFixed(2);
+  };
+
   const increaseQuantity = (productId) => {
     const updatedCart = cart.map((item) =>
       item._id === productId ? { ...item, quantity: item.quantity + 1 } : item
     );
     setCart(updatedCart);
+    setAmount(getTotalPrice());
   };
 
   const decreaseQuantity = (productId) => {
@@ -16,6 +32,11 @@ const CartView = ({ cart, setCart }) => {
       )
       .filter((item) => item.quantity > 0); // Remove cart with quantity 0
     setCart(updatedCart);
+    if (updatedCart.length === 0) {
+      setAmount(0);
+    } else {
+      setAmount(getTotalPrice());
+    }
   };
 
   const removeFromCart = (productId) => {
@@ -34,15 +55,24 @@ const CartView = ({ cart, setCart }) => {
   );
 
   const quantityContent = (product) => (
-    <div className="flex gap-2 justify-end">
-      <button onClick={() => decreaseQuantity(product._id)}>
-        <i className="pi pi-minus-circle"></i>
-      </button>
-      <span>{product.quantity}</span>
-      <button onClick={() => increaseQuantity(product._id)}>
-        <i className="pi pi-plus-circle"></i>
-      </button>
-    </div>
+    <>
+      {editable && (
+        <div className="flex gap-2 justify-end">
+          <button onClick={() => decreaseQuantity(product._id)}>
+            <i className="pi pi-minus-circle"></i>
+          </button>
+          <span>{product.quantity}</span>
+          <button onClick={() => increaseQuantity(product._id)}>
+            <i className="pi pi-plus-circle"></i>
+          </button>
+        </div>
+      )}
+      {!editable && (
+        <div className="flex gap-2 justify-center">
+          <span className="text-center">{product.quantity}</span>
+        </div>
+      )}
+    </>
   );
 
   const deleteContent = (product) => (

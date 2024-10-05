@@ -1,11 +1,18 @@
 'use client';
 import Link from 'next/link';
 import FormGroup from '@/components/FormGroup';
-import { Card, Button, TabPanel, TabView } from '@/utils/primeComponents';
+import {
+  Card,
+  Button,
+  TabPanel,
+  TabView,
+  ConfirmDialog,
+} from '@/utils/primeComponents';
 import { useEffect, useState } from 'react';
 import ContentSkeleton from '@/components/Skeleton/ContentSkeleton';
 import OrderView from '@/components/OrderView';
 import { getModuleItems } from '@/services';
+import OrderCard from '@/components/OrderCard';
 
 const Order = () => {
   const moduleName = 'order';
@@ -25,6 +32,11 @@ const Order = () => {
     setIsLoading(false);
   };
 
+  const deleteItem = (id) => {
+    const newItems = pendingOrders.filter((el) => el._id !== id);
+    setPendingOrders(newItems);
+  };
+
   useEffect(() => {
     getOrders();
   }, []);
@@ -38,15 +50,63 @@ const Order = () => {
           <ContentSkeleton />
         ) : (
           <>
+            <ConfirmDialog />
             <TabView>
               <TabPanel header="Pendientes">
-                <OrderView items={pendingOrders} itemUrl={itemUrl}></OrderView>
+                {/* <OrderView
+                  moduleName="order"
+                  items={pendingOrders}
+                  itemUrl={itemUrl}
+                  setCategories={setPendingOrders}
+                  editable
+                ></OrderView> */}
+                {pendingOrders &&
+                  pendingOrders.map((order) => {
+                    return (
+                      <OrderCard
+                        order={order}
+                        moduleName="order"
+                        itemUrl={itemUrl}
+                        setCategories={setPendingOrders}
+                        editable
+                        deleteItem={deleteItem}
+                        key={order._id}
+                      ></OrderCard>
+                    );
+                  })}
+                {pendingOrders.length === 0 && (
+                  <h2 className="text-center mt-4">
+                    <i className="pi pi-info-circle"></i> Sin elementos que
+                    mostrar
+                  </h2>
+                )}
               </TabPanel>
               <TabPanel header="Completadas">
-                <OrderView
+                {/* <OrderView
+                  moduleName="order"
                   items={completedOrders}
                   itemUrl={itemUrl}
-                ></OrderView>
+                ></OrderView> */}
+                {completedOrders &&
+                  completedOrders.map((order) => {
+                    return (
+                      <OrderCard
+                        order={order}
+                        moduleName="order"
+                        itemUrl={itemUrl}
+                        setCategories={setCompletedOrders}
+                        editable
+                        deleteItem={deleteItem}
+                        key={order._id}
+                      ></OrderCard>
+                    );
+                  })}
+                {completedOrders.length === 0 && (
+                  <h2 className="text-center mt-4">
+                    <i className="pi pi-info-circle"></i> Sin elementos que
+                    mostrar
+                  </h2>
+                )}
               </TabPanel>
             </TabView>
           </>

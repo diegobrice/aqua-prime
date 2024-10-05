@@ -11,8 +11,7 @@ const timeOptions = {
   timeZone: 'America/Lima',
   hour: '2-digit',
   minute: '2-digit',
-  second: '2-digit',
-  hour12: false,
+  hour12: true,
 };
 
 export const getFormatedTime = (utcDate) => {
@@ -21,8 +20,5 @@ export const getFormatedTime = (utcDate) => {
 
   // Obtener la hora en formato 'HH:mm:ss'
   const peruTime = utcDate.toLocaleTimeString('es-PE', timeOptions);
-  return {
-    peruDate,
-    peruTime,
-  };
+  return { peruDate, peruTime };
 };
