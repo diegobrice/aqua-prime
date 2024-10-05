@@ -117,6 +117,7 @@ const NewOrder = () => {
                 id="client"
                 name="client"
                 options={clients}
+                filter
                 optionLabel="name"
                 placeholder="Selecciona un cliente"
                 value={selectedClient}
